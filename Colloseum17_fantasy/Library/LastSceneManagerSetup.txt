@@ -1,4 +1,8 @@
 sceneSetups:
+<<<<<<< HEAD
 - path: Assets/Scenes/wulfers_prototype.unity
+=======
+- path: Assets/Scenes/murat_prototype.unity
+>>>>>>> 896e791737f811b1a06af00b25a268bcd4d091c3
   isLoaded: 1
   isActive: 1
