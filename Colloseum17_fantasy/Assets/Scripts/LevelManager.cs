@@ -3,27 +3,28 @@ using System.Collections;
 using System;
 using UnityEngine.SceneManagement;
 
-public class LevelManager : MonoBehaviour {
+public class LevelManager : MonoBehaviour
+{
+    public static LevelManager Instance;
+    int currentSceneIndex;
+    Scene currentScene;
 
-	// Use this for initialization
-	void Start ()
+    new string name = "ross_prototype";
+    public static void LoadScene(string v, LoadSceneMode single)
     {
-        LoadScene("", LoadSceneMode.Additive);
-	}
-
-    private static void LoadScene(string v, object additive)
-    {
-        throw new NotImplementedException();
+        SceneManager.LoadScene(v, single);
     }
 
-    public static SceneManagement.Scene GetSceneByName(string name)
+    public static Scene GetSceneByName(string name)
     {
-        
+        Scene scene = SceneManager.GetSceneByName(name);
+        return scene;
     }
 
-    public static bool SetActiveScene(SceneManagement.Scene scene)
+    public static bool SetActiveScene(Scene scene)
     {
-
+        return false;
     }
-
+    
+}
  
