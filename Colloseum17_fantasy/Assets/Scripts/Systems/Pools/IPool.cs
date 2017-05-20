@@ -4,6 +4,7 @@ public enum PoolType
 {
     Enemy,
     Bullet,
+    Pickup,
 }
 
 public interface IPool

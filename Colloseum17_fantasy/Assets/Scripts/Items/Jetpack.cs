@@ -11,9 +11,13 @@ public class Jetpack : IEquipable
         set
         {
             fuel = Mathf.Clamp(value, 0, 100);
-            isEmpty = fuel > 0 ? false : true;
+            isEmpty = (fuel > 0) ? false : true;
         }
-        get { return fuel; }
+        get
+        {
+            isEmpty = (fuel > 0) ? false : true;
+            return fuel;
+        }
     }
 
     public override IEquipable AddToInventory(PlayerData player)
@@ -37,5 +41,10 @@ public class Jetpack : IEquipable
     {
         if (!isEmpty)
             fuel -= 1;
+    }
+
+    void OnGUI()
+    {
+        GUILayout.TextArea("JetFuel: " + Fuel);
     }
 }
