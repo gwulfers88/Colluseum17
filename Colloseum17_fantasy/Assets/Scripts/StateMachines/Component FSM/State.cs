@@ -1,8 +1,4 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-
-public abstract class State : IState
+﻿public abstract class State : IState
 {
     private string _name = string.Empty;
     private StateMachine _stateMachine;
@@ -20,7 +16,7 @@ public abstract class State : IState
     public State(string name, StateMachine stateMachine)
     {
         this._name = (name != string.Empty) ? name : string.Empty;
-        this_stateMachine = stateMachine;
+        this._stateMachine = stateMachine;
         this._stateMachine.AddState(this);
     }
     #endregion

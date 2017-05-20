@@ -1,7 +1,4 @@
-﻿using UnityEngine;
-using System.Collections;
-
-public interface IStateMachine
+﻿public interface IStateMachine
 {
     void ChangeState(State toState);
     void ChangeState(string toState);

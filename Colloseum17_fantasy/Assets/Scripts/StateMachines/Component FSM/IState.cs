@@ -1,7 +1,4 @@
-﻿using UnityEngine;
-using System.Collections;
-
-public interface IState
+﻿public interface IState
 {
     void OnEnter();
     void OnUpdate();

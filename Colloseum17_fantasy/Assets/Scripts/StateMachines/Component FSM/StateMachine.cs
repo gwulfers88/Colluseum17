@@ -1,23 +1,32 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using System;
+﻿using System.Collections.Generic;
 
 public abstract class StateMachine : IStateMachine
 {
     private Dictionary<string, State> states = new Dictionary<string, State>();
     private State currentState = null;
 
+
+    #region Constructors
+    public StateMachine()
+    {
+        currentState = null;
+    }
+    #endregion
+
     #region Class Method
     public void AddState(State state)
     {
-        
+        if(state != null)
+        {
+            states.Add(state.Name, state);
+        }
     }
 
     public void ChangeState(string toState)
     {
         if (states.ContainsKey(toState))
         {
+            currentState.OnExit();
             currentState = states[toState];
             currentState.OnEnter();
         }
@@ -25,25 +34,30 @@ public abstract class StateMachine : IStateMachine
 
     public void ChangeState(State toState)
     {
-        if()
+        if (toState != null)
+        {
+            currentState.OnExit();
+            currentState = toState;
+            currentState.OnEnter();
+        }
     }
 
     public void FixedUpdateActiveState()
     {
-        if (ActiveState != null)
-            ActiveState.FixedUpdate();
+        if (currentState != null)
+            currentState.OnFixedUpdate();
     }
 
     //Removes state from list
     public void RemState(State state)
     {
-        State.Remove(state);
+        states.Remove(state.Name);
     }
 
     public void UpdateActiveState()
     {
-        if (ActiveState != null)
-            ActiveState.Update();
+        if (currentState != null)
+            currentState.OnUpdate();
     }
     #endregion
 }
