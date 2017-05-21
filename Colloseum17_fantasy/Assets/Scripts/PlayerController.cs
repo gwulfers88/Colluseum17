@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     private void Update ()
     {
+        playerData.isFlying = false;
         groundPoint = transform.position + playerData.groundOffset;
         Vector3 velocity = Vector3.zero;
 
@@ -40,16 +41,35 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.D))
             velocity += playerData.speed * Vector3.right;
 
-        if (Input.GetKeyDown(KeyCode.Space))
-            // Jetpack
-
-        if(playerData.equipables.Count > 0)
+        if(Input.GetKeyDown(KeyCode.Alpha1))
         {
-            Debug.Log("Current Equipment: " + playerData.equipables[playerData.currentEquipable].equipName);
+            ChangeEquipment("Simple Jetpack");
         }
 
-        if (!playerData.isGrounded)
+        if (Input.GetKey(KeyCode.Space))
+        {
+            // Jetpack
+            if(playerData.currentEquipable)
+            {
+                if(playerData.currentEquipable.type == EquipableType.Jetpack)
+                {
+                    Jetpack jetpack = (Jetpack)playerData.currentEquipable;
+                    if (!jetpack.isEmpty)
+                    {
+                        jetpack.UseFuel();
+                        playerData.isFlying = true;
+                    }
+                }
+            }
+        }
+        
+        if (!playerData.isGrounded && !playerData.isFlying)
             velocity += Vector3.down * 5.0f;
+
+        if(playerData.isFlying)
+        {
+            velocity += Vector3.up * 5.0f;
+        }
 
         transform.position += velocity * Time.deltaTime;
         //rb.velocity = velocity;
@@ -61,9 +81,23 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("Found Floor");
             playerData.isGrounded = true;
+            playerData.isFlying = false;
         }
         else
             playerData.isGrounded = false;
+    }
+
+    void ChangeEquipment(string name)
+    {
+        for(uint i = 0; i < playerData.equipables.Count; i++)
+        {
+            IEquipable equipment = playerData.equipables[(int)i];
+            if(equipment.equipName == name)
+            {
+                playerData.currentEquipable = equipment;
+                break;
+            }
+        }
     }
 
     void OnDrawGizmo()

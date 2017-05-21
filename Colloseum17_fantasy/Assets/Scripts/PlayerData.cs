@@ -9,5 +9,5 @@ public class PlayerData : MonoBehaviour
     public bool isFlying = false;
     public Vector3 groundOffset = Vector3.down;
     public List<IEquipable> equipables = new List<IEquipable>();
-    public int currentEquipable = 0;
+    public IEquipable currentEquipable = null;
 }
