@@ -45,12 +45,12 @@ public class EnemyMovement : MonoBehaviour
 
         if (state == EnemyState.Move)
         {
-            Debug.Log("MoveToTarg()");
+            Debug.Log("MoveToTarg() + update");
             MovementToTarget();
         }
         else if (state == EnemyState.Attack)
         {
-            Debug.Log("Attack()");
+            Debug.Log("Attack() + update");
             Attack();
         }
 	
@@ -60,17 +60,19 @@ public class EnemyMovement : MonoBehaviour
 
     void MovementToTarget()
     {
+        // here the move to function is going toward the target dir
         MoveToTarget(targetPlayer.transform.position);
-
+        // if he can see the target
         if (EnemyCanDetectTarget())
         {
+            // player & enemy pos defined
             Vector3 playerTargPos = targetPlayer.transform.position;
             Vector3 enemyPos = transform.position;
-
+            //enemy will check to see if the dist(a-b) is less than attack range = 3
             if (Vector3.Distance(playerTargPos, enemyPos) < attackRange)
             {
                 state = EnemyState.Attack;
-                Debug.Log("Attack State Entered in MoveToTargFunct");
+                Debug.Log("AttackRange= " + attackRange + " ->AttackState Entered in MoveToTargFunct");
             }
         }
         else
@@ -90,7 +92,7 @@ public class EnemyMovement : MonoBehaviour
         Vector3 direction = targetPlayer.transform.position - transform.position;
         // distance between 2 pts = mag
         distance = direction.magnitude;
-        //sets to normalized value = 1;
+        //sets to normalized value (= 1);
         direction = direction.normalized;
         Vector3 velocity = direction * speed * Time.fixedDeltaTime;
         transform.position += velocity;
@@ -101,21 +103,24 @@ public class EnemyMovement : MonoBehaviour
 
     bool EnemyCanDetectTarget()
     {
-        Vector3 forward = transform.TransformDirection(-1, 0, 0);
+        float negOne = -1.0f;
+        // enemies forward direction// which is on x// going neg. from right screen to left screen
+        Vector3 forward = transform.TransformDirection(negOne, 0, 0);
         Vector3 targetPlayerPos = targetPlayer.transform.position;
         Vector3 enemyPos = transform.position;
 
         Vector3 targetDirection = (targetPlayerPos - enemyPos).normalized;
         float angle = Vector3.Angle(forward, targetDirection);
-
+        //if angle is less than view field = 10 units
         if (angle < viewField)
         {
             RaycastHit hit;
-
+            // raycasting to see if enemy is in the radiusOfView(cone) = 10units
             if (Physics.Raycast(enemyPos, forward, out hit, radiusOfView))
             {
                 if (hit.collider.gameObject.tag == "Player")
                 {
+                    //if you hit something return true//else you have nothing in view
                     return true;
                 }
             }
@@ -134,19 +139,20 @@ public class EnemyMovement : MonoBehaviour
             //move to attack range
             Vector3 playerTargetPos = targetPlayer.transform.position;
             Vector3 enemyPos = transform.position;
-
+            // if dist(a-b) is greater than the attack range// enemy move toward player
             if (Vector3.Distance(playerTargetPos, enemyPos) > attackRange)
             {
                 state = EnemyState.Move;
             }
 
-            //shoot
+            //shoot if the time of your lastShot(0) + shootSpeed(1) is greater than time// meaning shot every second//
             if (Time.time > lastShot + shootSpeed)
             {
                 Shoot();
                 lastShot = Time.time;
             }
             something = something + Time.fixedDeltaTime;
+            
             //strafe
             enemyPos.y = Mathf.Cos(something * 2);
             transform.position = enemyPos;
