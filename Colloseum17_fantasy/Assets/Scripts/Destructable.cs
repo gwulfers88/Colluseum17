@@ -3,16 +3,20 @@ using System.Collections;
 
 public class Destructable : MonoBehaviour
 {
+    public float healthPoints = 1;
+    public GameObject replacement;
 
-	// Use this for initialization
-	void Start ()
+    public void DamageTakenDestroyEnemy(float damage)
     {
-	
-	}
-	
-	// Update is called once per frame
-	void Update ()
-    {
-	
-	}
+        // health will be assigned after damage
+        healthPoints = healthPoints - damage;
+        //if health is less than 0
+        if (healthPoints <= 0)
+        {
+            // create an obj at the pos// note obj should be blank
+            Instantiate(replacement, transform.position, transform.rotation);
+            //hence destory gameobj
+            Destroy(gameObject);
+        }
+    }
 }

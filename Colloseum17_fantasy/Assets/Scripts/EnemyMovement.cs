@@ -32,10 +32,15 @@ public class EnemyMovement : MonoBehaviour
     float strafeTime = 2;
     private int strafeDir = 0;
 
+    EnemyGun gun;
+    Destructable destruct;
+
     // Use this for initialization
     void Start ()
     {
         targetPlayer = GameObject.FindGameObjectWithTag("Player");
+        destruct = GetComponent<Destructable>();
+        gun = GetComponentInChildren<EnemyGun>();
 	
 	}
 	
@@ -154,7 +159,7 @@ public class EnemyMovement : MonoBehaviour
             something = something + Time.fixedDeltaTime;
             
             //strafe
-            enemyPos.y = Mathf.Cos(something * 2);
+            enemyPos.y = Mathf.Cos(something * 2) * 3;
             transform.position = enemyPos;
         }
         else
@@ -166,5 +171,6 @@ public class EnemyMovement : MonoBehaviour
     void Shoot()
     {
         Debug.Log("Bang Bang! You are dead");
+        gun.Shoot();
     }
 }

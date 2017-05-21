@@ -1,16 +1,4 @@
 sceneSetups:
-<<<<<<< HEAD
 - path: Assets/Scenes/magana_enemyPrototype.unity
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
-- path: Assets/Scenes/wulfers_prototype.unity
-=======
-- path: Assets/Scenes/murat_prototype.unity
->>>>>>> 896e791737f811b1a06af00b25a268bcd4d091c3
-=======
-- path: Assets/Scenes/ross_prototype.unity
->>>>>>> 44ee3563093e518d20eed0e562ce635e21929bdf
->>>>>>> 3a4143a499735f1f401c9df0d95b3b6f85209c90
   isLoaded: 1
   isActive: 1
