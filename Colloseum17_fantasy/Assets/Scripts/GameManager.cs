@@ -5,8 +5,7 @@ public class GameManager : MonoBehaviour
 {
     public List<string> prefabs = new List<string>();
     public List<PoolType> types = new List<PoolType>();
-    public PoolManager poolManager = null;
-
+    
     public float timer = 0;
     public float rate = 3;
 
@@ -20,7 +19,7 @@ public class GameManager : MonoBehaviour
         {
             string prefab = prefabs[i];
             PoolType type = types[i];
-            poolManager.RegisterPool(type, prefab, 5);
+            PoolManager.Instance.RegisterPool(type, prefab, 5);
         }
 	}
 	
@@ -30,7 +29,7 @@ public class GameManager : MonoBehaviour
         timer += Time.deltaTime;
         if (timer >= rate)
         {
-            poolManager.RequestObjectFrom(PoolType.Bullet);
+            PoolManager.Instance.RequestObjectFrom(PoolType.Bullet);
             timer = 0;
         }
 	}

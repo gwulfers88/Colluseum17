@@ -5,9 +5,9 @@ using System.Collections;
 public class PlayerController : MonoBehaviour
 {
     private PlayerData playerData = null;
-    public LayerMask groundLayer;
-    public Vector3 groundPoint;
-    public Rigidbody rb;
+    public LayerMask groundLayer = 0;
+    public Vector3 groundPoint = Vector3.zero;
+    public Rigidbody rb = null;
 
     // Use this for initialization
 	private void Start ()
@@ -19,9 +19,7 @@ public class PlayerController : MonoBehaviour
             Debug.Break();
         }
         groundPoint = transform.position + playerData.groundOffset;
-        /*Jetpack jetpack = gameObject.AddComponent<Jetpack>();
-        jetpack.AddToInventory(playerData);
-        */
+        
         rb = GetComponent<Rigidbody>();
 	}
 
@@ -72,7 +70,6 @@ public class PlayerController : MonoBehaviour
         }
 
         transform.position += velocity * Time.deltaTime;
-        //rb.velocity = velocity;
     }
 
     private void FixedUpdate()
@@ -98,15 +95,5 @@ public class PlayerController : MonoBehaviour
                 break;
             }
         }
-    }
-
-    void OnDrawGizmo()
-    {
-        Gizmos.DrawWireSphere(transform.position, .01f);
-    }
-
-    void OnGUI()
-    {
-        
     }
 }
