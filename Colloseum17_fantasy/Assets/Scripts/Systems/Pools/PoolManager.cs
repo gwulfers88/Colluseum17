@@ -18,6 +18,8 @@ public class PoolManager : MonoSingleton<PoolManager>, IPoolManager
 
             if(type == PoolType.Bullet)
                 pool = new BulletPool(type, prefab, size, sizeable);
+            if (type == PoolType.Enemy)
+                pool = new EnemyPool(type, prefab, size, sizeable);
 
             if (pool != null)
             {

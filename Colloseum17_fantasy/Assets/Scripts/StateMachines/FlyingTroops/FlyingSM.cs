@@ -6,13 +6,23 @@ public class FlyingSM : StateMachine
     private MovementFlying moveState;
     private AttackFlying attackState;
     private DeathFlying deathState;
+    public EnemyGun gun;
 
-    Transform transform;
+    public Transform transform;
+    private float lives = 0;
+    public float Lives
+    {
+        set { lives = value; }
+        get { return lives; }
+    }
 
     // Constructor
-    public FlyingSM(Transform trans) : base()
+    public FlyingSM(Transform trans, int lives) : base()
     {
         transform = trans;
+        Lives = lives;
+
+        gun = transform.gameObject.AddComponent<EnemyGun>();
 
         moveState = new MovementFlying("Move", this);
         attackState = new AttackFlying("Attack", this);

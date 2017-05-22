@@ -45,10 +45,19 @@ public abstract class Pool : IPool
             active.Enqueue(obj);
             obj.SetActive(true);
         }
-
+        else
+        {
+            if (canGrow)
+            {
+                obj = GameObject.Instantiate(Resources.Load(prefabName)) as GameObject;
+                active.Enqueue(obj);
+                obj.SetActive(true);
+            }
+        }
+        
         return obj;
     }
-
+    
     public void DestroyObject()
     {
         if(active.Count > 0)
