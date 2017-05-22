@@ -57,9 +57,4 @@ public class Jetpack : IEquipable
             fuel -= maxFuel * burnRate;
         fuel = Mathf.Clamp(fuel, 0.0f, maxFuel);
     }
-
-    //void OnGUI()
-    //{
-    //    GUILayout.TextArea("JetFuel: " + Fuel);
-    //}
 }

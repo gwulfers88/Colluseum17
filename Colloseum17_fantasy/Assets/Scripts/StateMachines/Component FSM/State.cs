@@ -6,7 +6,6 @@
     #region Properties
     public string Name {get { return _name; } set { _name = value; } }
     public StateMachine StateMachine { get { return _stateMachine; } set { _stateMachine = value; } }
-    public StateMachine SM { get { return _stateMachine; } set { _stateMachine = value; } }
     #endregion
 
     #region Constructors

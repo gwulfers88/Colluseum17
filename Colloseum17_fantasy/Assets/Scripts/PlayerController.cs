@@ -122,30 +122,4 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
-
-    //string slot1 = "[1] EMPTY";
-    //string slot2 = "[2] EMPTY";
-
-    //void OnGUI()
-    //{
-    //    if (playerData.currentEquipableSlot1)
-    //        slot1 = "[1] " + playerData.currentEquipableSlot1.equipName;
-    //    else
-    //        slot1 = "[1] EMPTY";
-
-    //    if (playerData.currentEquipableSlot2)
-    //        slot2 = "[2] " + playerData.currentEquipableSlot2.equipName;
-    //    else
-    //        slot2 = "[2] EMPTY";
-
-    //    Rect pos = new Rect();
-    //    pos.x = 0;
-    //    pos.y = 20;
-    //    pos.width = 200;
-    //    pos.height = 20;
-
-    //    GUI.TextArea(pos, slot1);
-    //    pos.y += 20;
-    //    GUI.TextArea(pos, slot2);
-    //}
 }

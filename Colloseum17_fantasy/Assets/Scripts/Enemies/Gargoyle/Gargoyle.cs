@@ -1,15 +1,24 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Gargoyle : MonoBehaviour {
+public class Gargoyle : MonoBehaviour
+{
+    FlyingSM flyingSM = null;
 
 	// Use this for initialization
-	void Start () {
-	
+	void Start ()
+    {
+        flyingSM = new FlyingSM(transform);
 	}
 	
 	// Update is called once per frame
-	void Update () {
-	
+	void Update ()
+    {
+        flyingSM.UpdateActiveState();
 	}
+
+    void FixedUpdate()
+    {
+        flyingSM.FixedUpdateActiveState();
+    }
 }

@@ -5,7 +5,12 @@ public class Pickup : MonoBehaviour
 {
     public EquipableType type;
 
-    void OnTriggerEnter(Collider player)
+    private void Update()
+    {
+        transform.rotation = Quaternion.Euler(Vector3.up);
+    }
+
+    private void OnTriggerEnter(Collider player)
     {
         if(player.CompareTag("Player"))
         {
@@ -25,6 +30,7 @@ public class Pickup : MonoBehaviour
                     else
                     {
                         // Points??
+                        return;
                     }
                 }
 
