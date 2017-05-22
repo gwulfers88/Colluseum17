@@ -1,8 +1,4 @@
 sceneSetups:
-<<<<<<< HEAD
 - path: Assets/Scenes/wulfers_prototype.unity
-=======
-- path: Assets/Scenes/magana_enemyPrototype.unity
->>>>>>> 7df5eb94fabb59d29c9e35e2890a6c20cf7c4596
   isLoaded: 1
   isActive: 1

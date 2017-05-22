@@ -53,4 +53,12 @@ public class PoolManager : MonoSingleton<PoolManager>, IPoolManager
 
         return obj;
     }
+
+    public void DestroyObjectFrom(PoolType type)
+    {
+        if(pools.ContainsKey(type))
+        {
+            pools[type].DestroyObject();
+        }
+    }
 }

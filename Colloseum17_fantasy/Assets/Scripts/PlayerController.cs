@@ -19,7 +19,10 @@ public class PlayerController : MonoBehaviour
             Debug.Break();
         }
         groundPoint = transform.position + playerData.groundOffset;
-        
+
+        Gun gun = gameObject.AddComponent<Gun>();
+        gun.AddToInventory(playerData);
+
         rb = GetComponent<Rigidbody>();
 	}
 
@@ -30,70 +33,119 @@ public class PlayerController : MonoBehaviour
         groundPoint = transform.position + playerData.groundOffset;
         Vector3 velocity = Vector3.zero;
 
-        if (Input.GetKey(KeyCode.W) && playerData.isGrounded && !playerData.isFlying)
-            velocity += (playerData.speed * 10 ) * Vector3.up;
+        // Movement
         if (Input.GetKey(KeyCode.A))
             velocity += playerData.speed * Vector3.left;
-        if (Input.GetKey(KeyCode.S))
-            velocity += playerData.speed * Vector3.down;
         if (Input.GetKey(KeyCode.D))
             velocity += playerData.speed * Vector3.right;
-
-        if(Input.GetKeyDown(KeyCode.Alpha1))
+        
+        // Jump
+        if (Input.GetKey(KeyCode.W) && playerData.isGrounded && !playerData.isFlying)
         {
-            ChangeEquipment("Simple Jetpack");
-        }
-
-        if (Input.GetKey(KeyCode.Space))
-        {
-            // Jetpack
-            if(playerData.currentEquipable)
-            {
-                if(playerData.currentEquipable.type == EquipableType.Jetpack)
-                {
-                    Jetpack jetpack = (Jetpack)playerData.currentEquipable;
-                    if (!jetpack.isEmpty)
-                    {
-                        jetpack.UseFuel();
-                        playerData.isFlying = true;
-                    }
-                }
-            }
+            rb.AddForce(new Vector3(0, 0.20f * playerData.speed, 0), ForceMode.Impulse);
         }
         
-        if (!playerData.isGrounded && !playerData.isFlying)
-            velocity += Vector3.down * 5.0f;
-
-        if(playerData.isFlying)
+        // Equipment
+        if(Input.GetKeyDown(KeyCode.Alpha1))
         {
-            velocity += Vector3.up * 5.0f;
+            ChangeEquipment(1, "Simple Jetpack");
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            ChangeEquipment(2, "Simple Laser Gun");
         }
 
-        transform.position += velocity * Time.deltaTime;
-    }
-
-    private void FixedUpdate()
-    {
-        if (Physics.OverlapSphere(groundPoint, .01f, groundLayer).Length > 0)
+        // Jetpack use
+        if (Input.GetKey(KeyCode.Space) && CanFly())
         {
-            Debug.Log("Found Floor");
-            playerData.isGrounded = true;
+            playerData.isFlying = true;
+        }
+        else if(Input.GetKeyUp(KeyCode.Space) && CanFly())
+        {
             playerData.isFlying = false;
+        }
+
+        // Ground collision
+        if (Physics.OverlapSphere(groundPoint, .15f, groundLayer).Length > 0)
+        {
+            playerData.isGrounded = true;
         }
         else
             playerData.isGrounded = false;
+        
+        // Fuel
+        if(playerData.isFlying)
+        {
+            if(!CanFly())
+            {
+                playerData.isFlying = false;
+            }
+            else
+            {
+                Jetpack jetpack = playerData.currentEquipableSlot1;
+                jetpack.UseFuel();
+                rb.AddForce(new Vector3(0, 5f * playerData.speed, 0));
+            }
+        }
+        
+        transform.position += velocity * Time.deltaTime;
     }
 
-    void ChangeEquipment(string name)
+    private bool CanFly()
+    {
+        bool Result = false;
+
+        if (playerData.currentEquipableSlot1 == null)
+            return Result;
+
+        if(playerData.currentEquipableSlot1)
+        {
+            Jetpack jetpack = playerData.currentEquipableSlot1;
+            Result = jetpack.CanFly();
+        }
+
+        return Result;
+    }
+
+    void ChangeEquipment(int slot, string name)
     {
         for(uint i = 0; i < playerData.equipables.Count; i++)
         {
             IEquipable equipment = playerData.equipables[(int)i];
             if(equipment.equipName == name)
             {
-                playerData.currentEquipable = equipment;
+                if(slot == 1)
+                    playerData.currentEquipableSlot1 = (Jetpack)equipment;
+                else if (slot == 2)
+                    playerData.currentEquipableSlot2 = (Gun)equipment;
                 break;
             }
         }
     }
+
+    //string slot1 = "[1] EMPTY";
+    //string slot2 = "[2] EMPTY";
+
+    //void OnGUI()
+    //{
+    //    if (playerData.currentEquipableSlot1)
+    //        slot1 = "[1] " + playerData.currentEquipableSlot1.equipName;
+    //    else
+    //        slot1 = "[1] EMPTY";
+
+    //    if (playerData.currentEquipableSlot2)
+    //        slot2 = "[2] " + playerData.currentEquipableSlot2.equipName;
+    //    else
+    //        slot2 = "[2] EMPTY";
+
+    //    Rect pos = new Rect();
+    //    pos.x = 0;
+    //    pos.y = 20;
+    //    pos.width = 200;
+    //    pos.height = 20;
+
+    //    GUI.TextArea(pos, slot1);
+    //    pos.y += 20;
+    //    GUI.TextArea(pos, slot2);
+    //}
 }
