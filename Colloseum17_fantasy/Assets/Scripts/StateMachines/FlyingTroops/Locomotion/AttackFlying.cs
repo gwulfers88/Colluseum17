@@ -1,21 +1,28 @@
-﻿public class AttackFlying : IState
+﻿using UnityEngine;
+
+public class AttackFlying : State
 {
-    public void OnEnter()
+    public AttackFlying(string name, FlyingSM stateMachine) : base(name, stateMachine)
+    {
+
+    }
+
+    public override void OnEnter()
     {
         
     }
 
-    public void OnExit()
+    public override void OnExit()
     {
         
     }
 
-    public void OnFixedUpdate()
+    public override void OnFixedUpdate()
     {
         
     }
 
-    public void OnUpdate()
+    public override void OnUpdate()
     {
       
     }

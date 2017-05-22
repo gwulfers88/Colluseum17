@@ -1,21 +1,28 @@
-﻿public class MovementFlying : IState
+﻿using UnityEngine;
+
+public class MovementFlying : State
 {
-    public void OnEnter()
+    public MovementFlying(string name, FlyingSM stateMachine) : base(name, stateMachine)
+    {
+
+    }
+
+    public override void OnEnter()
     {
         
     }
 
-    public void OnExit()
+    public override void OnExit()
     {
         
     }
 
-    public void OnFixedUpdate()
+    public override void OnFixedUpdate()
     {
         
     }
 
-    public void OnUpdate()
+    public override void OnUpdate()
     {
         
     }

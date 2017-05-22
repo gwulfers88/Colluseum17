@@ -1,21 +1,28 @@
-﻿public class DeathFlying : IState
+﻿using UnityEngine;
+
+public class DeathFlying : State
 {
-    public void OnEnter()
+    public DeathFlying(string name, FlyingSM stateMachine) : base(name, stateMachine)
+    {
+
+    }
+
+    public override void OnEnter()
     {
         
     }
 
-    public void OnExit()
+    public override void OnExit()
     {
         
     }
 
-    public void OnFixedUpdate()
+    public override void OnFixedUpdate()
     {
         
     }
 
-    public void OnUpdate()
+    public override void OnUpdate()
     {
         
     }

@@ -5,15 +5,35 @@ public class Pickup : MonoBehaviour
 {
     public EquipableType type;
 
-    void OnCollisionEnter(Collision col)
+    private void Update()
     {
-        if(col.collider.CompareTag("Player"))
+        transform.rotation = Quaternion.Euler(Vector3.up);
+    }
+
+    private void OnTriggerEnter(Collider player)
+    {
+        if(player.CompareTag("Player"))
         {
-            GameObject player = col.gameObject;
+            GameObject playerObj = player.gameObject;
             if(type == EquipableType.Jetpack)
             {
-                Jetpack pack = player.AddComponent<Jetpack>();
-                pack.AddToInventory(player.GetComponent<PlayerData>());
+                Jetpack pack = playerObj.GetComponent<Jetpack>();
+                if (pack == null)
+                {
+                    pack = playerObj.AddComponent<Jetpack>();
+                    pack.AddToInventory(player.GetComponent<PlayerData>());
+                }
+                else
+                {
+                    if (pack.Fuel < 100)
+                        pack.Fuel += Random.Range(20, 100);
+                    else
+                    {
+                        // Points??
+                        return;
+                    }
+                }
+
                 Destroy(this.gameObject);
             }
         }

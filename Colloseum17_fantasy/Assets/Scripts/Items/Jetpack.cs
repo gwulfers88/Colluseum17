@@ -5,12 +5,16 @@ using System;
 public class Jetpack : IEquipable
 {
     public bool isEmpty = false;
-    private int fuel = 100;
-    public int Fuel
+    private int maxFuel = 100;
+    [SerializeField]
+    private float burnRate = 0;
+    [SerializeField]
+    private float fuel = 0;
+    public float Fuel
     {
         set
         {
-            fuel = Mathf.Clamp(value, 0, 100);
+            fuel = Mathf.Clamp(value, 0.0f, maxFuel);
             isEmpty = (fuel > 0) ? false : true;
         }
         get
@@ -20,14 +24,24 @@ public class Jetpack : IEquipable
         }
     }
 
+    public bool CanFly()
+    {
+        return !isEmpty;
+    }
+
     public override IEquipable AddToInventory(PlayerData player)
     {
         type = EquipableType.Jetpack;
         Debug.Log("Picked up jetpack");
-        fuel = 100;
+        fuel = maxFuel;
+        burnRate = 0.05f;
         equipName = "Simple Jetpack";
         owner = player.gameObject;
         player.equipables.Add(this);
+        
+        if (player.currentEquipableSlot1 == null)
+            player.currentEquipableSlot1 = this;
+
         return this;
     }
 
@@ -40,11 +54,7 @@ public class Jetpack : IEquipable
     public void UseFuel()
     {
         if (!isEmpty)
-            fuel -= 1;
-    }
-
-    void OnGUI()
-    {
-        GUILayout.TextArea("JetFuel: " + Fuel);
+            fuel -= maxFuel * burnRate;
+        fuel = Mathf.Clamp(fuel, 0.0f, maxFuel);
     }
 }

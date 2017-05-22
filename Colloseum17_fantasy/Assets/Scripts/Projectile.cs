@@ -3,15 +3,32 @@ using System.Collections;
 
 public class Projectile : MonoBehaviour
 {
+    float timer = 0;
     float lifetime = 2;
     float damage = 1;
-    GameObject projectile;
-
-	// Use this for initialization
-	void Start ()
+    
+    private void OnEnable()
     {
-        Destroy(projectile, lifetime);
-	}
+        Reset();
+    }
+
+    public void Reset()
+    {
+        timer = 0;
+        transform.position = Vector3.zero;
+        transform.rotation = Quaternion.identity;
+        GetComponent<Rigidbody>().velocity = Vector3.zero;
+    }
+
+    private void Update()
+    {
+        timer += Time.deltaTime;
+        if(timer >= lifetime)
+        {
+            Reset();
+            PoolManager.Instance.DestroyObjectFrom(PoolType.Bullet);
+        }
+    }
 
     void OnCollEnter(Collision coll)
     {
@@ -22,10 +39,7 @@ public class Projectile : MonoBehaviour
             other.DamageTakenDestroyEnemy(damage);
         }
 
-        GameObject tempReplace;
-        tempReplace = (GameObject)Instantiate(projectile, transform.position, transform.rotation);
-        const float one = 1;
-        Destroy(tempReplace, one);
-        Destroy(tempReplace);
+        Reset();
+        PoolManager.Instance.DestroyObjectFrom(PoolType.Bullet);
     }
 }
