@@ -34,7 +34,11 @@ public abstract class Pool : IPool
             inactive.Enqueue(obj);
         }
     }
-
+    public void Clear()
+    {
+        inactive.Clear();
+        active.Clear();
+    }
     public GameObject RequestObject()
     {
         GameObject obj = null;

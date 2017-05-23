@@ -5,6 +5,7 @@ public class PlayerData : MonoBehaviour
 {
     public int lives = 0;
     public int speed = 0;
+    public bool isAlive = true;
     public bool isGrounded = false;
     public bool isFlying = false;
     public Vector3 groundOffset = Vector3.down;

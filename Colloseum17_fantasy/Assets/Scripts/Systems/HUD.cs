@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class HUD : MonoBehaviour
 {
@@ -46,6 +47,17 @@ public class HUD : MonoBehaviour
             
             pos.y += pos.height;
             GUI.TextArea(pos, slot2 + slot2Name + slot2Data);
+
+            if(player.isAlive == false)
+            {
+                GUI.TextArea(new Rect(Screen.width / 2 - 50, Screen.height / 2 - 10, 100, 20), "GAME OVER!");
+                if(GUI.Button(new Rect(Screen.width / 2 - 50, Screen.height / 2 - 10 + 20, 100, 20), "Go To Main Menu"))
+                {
+                    PoolManager.Instance.UnregisterAllPools();
+                    DestroyImmediate(PoolManager.Instance.gameObject);
+                    SceneManager.LoadScene(0);
+                }
+            }
         }
     }
 }

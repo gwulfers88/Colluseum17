@@ -29,6 +29,14 @@ public class PoolManager : MonoSingleton<PoolManager>, IPoolManager
         }
     }
 
+    public void UnregisterAllPools()
+    {
+        foreach(KeyValuePair<PoolType, Pool> pair in pools)
+        {
+            pair.Value.Clear();
+        }
+    }
+
     public GameObject RequestObjectFrom(PoolType type)
     {
         GameObject obj = null;
