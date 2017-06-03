@@ -41,13 +41,11 @@ public class EnemyMovement : MonoBehaviour
         targetPlayer = GameObject.FindGameObjectWithTag("Player");
         destruct = GetComponent<Destructable>();
         gun = GetComponentInChildren<EnemyGun>();
-	
 	}
 	
 	// Update is called once per frame
 	void FixedUpdate ()
     {
-
         if (state == EnemyState.Move)
         {
             Debug.Log("MoveToTarg() + update");
@@ -58,7 +56,6 @@ public class EnemyMovement : MonoBehaviour
             Debug.Log("Attack() + update");
             Attack();
         }
-	
 	}
 
     
@@ -171,6 +168,6 @@ public class EnemyMovement : MonoBehaviour
     void Shoot()
     {
         Debug.Log("Bang Bang! You are dead");
-        gun.Shoot();
+        //gun.Shoot();
     }
 }

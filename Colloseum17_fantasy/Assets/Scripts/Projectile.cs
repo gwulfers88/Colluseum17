@@ -30,10 +30,10 @@ public class Projectile : MonoBehaviour
         }
     }
 
-    void OnCollEnter(Collision coll)
+    void OnCollisonEnter(Collision coll)
     {
         Destructable other = coll.gameObject.GetComponent<Destructable>();
-
+        Debug.Log("hit other ");
         if (other != null)
         {
             other.DamageTakenDestroyEnemy(damage);
