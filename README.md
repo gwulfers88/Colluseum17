@@ -1,9 +1,12 @@
 # Colluseum17
 AI NoHo Game Jam
 
-Members :
-David Magana
-Davin Ross
+Team:
+George Wulfers 		- Team Lead / Game Play Mechanic / System Engineer
+David Magana 		- Enemy AI Logic / Game Play Mechanic
+Murat Dugan 		- State Machine implementation / System Engineer
+Davin Ross 			- Menu
+Jacquelyn Isais 	- Artist
 
 
 Folder Setup

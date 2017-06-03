@@ -18,12 +18,22 @@ public class PoolManager : MonoSingleton<PoolManager>, IPoolManager
 
             if(type == PoolType.Bullet)
                 pool = new BulletPool(type, prefab, size, sizeable);
+            if (type == PoolType.Enemy)
+                pool = new EnemyPool(type, prefab, size, sizeable);
 
             if (pool != null)
             {
                 pools.Add(type, pool);
                 pool.InitPool();
             }
+        }
+    }
+
+    public void UnregisterAllPools()
+    {
+        foreach(KeyValuePair<PoolType, Pool> pair in pools)
+        {
+            pair.Value.Clear();
         }
     }
 

@@ -18,7 +18,8 @@ public abstract class StateMachine : IStateMachine
     {
         if(state != null)
         {
-            states.Add(state.Name, state);
+            if(!states.ContainsKey(state.Name))
+                states.Add(state.Name, state);
         }
     }
 
@@ -26,7 +27,8 @@ public abstract class StateMachine : IStateMachine
     {
         if (states.ContainsKey(toState))
         {
-            currentState.OnExit();
+            if (currentState != null)
+                currentState.OnExit();
             currentState = states[toState];
             currentState.OnEnter();
         }
@@ -36,7 +38,8 @@ public abstract class StateMachine : IStateMachine
     {
         if (toState != null)
         {
-            currentState.OnExit();
+            if(currentState != null)
+                currentState.OnExit();
             currentState = toState;
             currentState.OnEnter();
         }

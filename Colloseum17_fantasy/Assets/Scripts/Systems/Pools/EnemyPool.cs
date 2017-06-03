@@ -11,7 +11,10 @@ public class EnemyPool : Pool
     {
         GameObject obj = null;
         obj = RequestObject();
-        obj.transform.position = pos;
+        if (obj)
+        {
+            obj.transform.position = pos;
+        }
         return obj;
     }
 }

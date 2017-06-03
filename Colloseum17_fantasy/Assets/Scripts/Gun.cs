@@ -20,7 +20,7 @@ public class Gun : IEquipable
         if (player.currentEquipableSlot2 == null)
             player.currentEquipableSlot2 = this;
 
-        PoolManager.Instance.RegisterPool(PoolType.Bullet, bulletPrefabName, 5);
+        PoolManager.Instance.RegisterPool(PoolType.Bullet, bulletPrefabName, 10);
 
         return this;
     }
